@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moletom Verde - '9 Meses'</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(-45deg, #6a0dad, #8a2be2, #4b0082, #9370db);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #FFFFFF;
+            font-family: 'Baloo Tamma 2', cursive;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar {
+            background-color: #8A2BE2;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            background-color: #9370DB;
+        }
+
+        .content {
+            padding-top: 60px;
+        }
+
+        .timeline-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timeline {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline li {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #9370DB;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            transform: rotate(-5deg);
+        }
+
+        .timeline li:nth-child(odd) {
+            transform: rotate(5deg);
+        }
+
+        .timeline li:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline img {
+            width: 150px;
+            /* Ajuste para dispositivos móveis */
+            height: auto;
+            margin-right: 20px;
+            border: 5px solid #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .timeline .pin {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: #FFFFFF;
+            border: 3px solid #8A2BE2;
+            border-radius: 50%;
+        }
+
+        .timeline p {
+            display: none;
+        }
+
+        section {
+            padding: 20px 0;
+        }
+
+        .pixel-art {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pixel-art img {
+            width: 150px;
+            height: auto;
+        }
+
+        .wave-texture,
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-repeat: repeat;
+            opacity: 0.3;
+        }
+
+        .wave-texture {
+            background-image: url('imagens/wave-texture.jpeg');
+            animation: waveAnimation 30s linear infinite;
+        }
+
+        .hearts {
+            background-image: url('imagens/hearts.png');
+            animation: heartsAnimation 20s linear infinite;
+        }
+
+        @keyframes waveAnimation {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 100% 100%;
+            }
+        }
+
+        @keyframes heartsAnimation {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: -100% -100%;
+            }
+        }
+
+        /* Modal de Zoom */
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .zoom-modal-content {
+            margin: 10% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+        }
+
+        .zoom-modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .zoom-modal-content p {
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            background-color: #8A2BE2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .close-btn:hover {
+            background-color: #9370DB;
+        }
+
+        .footer {
+            background-color: #8A2BE2;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            display: none;
+            /* Inicialmente escondido */
+        }
+
+        .footer a {
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        .footer a:hover {
+            background-color: #9370DB;
+        }
+
+        .footer img {
+            width: 30px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        .extra-space {
+            height: 800px;
+            /* Adiciona espaço extra para rolar */
+        }
+
+        #video {
+            right: 65px;
+            margin: 20px 0;
+            padding: 40px;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: center;
+            width: 600px;
+        }
+
+        .h2 {
+            text-align: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .timeline li {
+                width: calc(100% - 1em);
+            }
+
+            .navbar a {
+                font-size: 1em;
+            }
+
+            .footer img {
+                width: 1.5em;
+            }
+
+            .zoom-modal-content {
+                width: 90%;
+            }
+
+            #video {
+                width: 500px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar a {
+                padding: 0.5em 0;
+            }
+
+            .timeline li {
+                width: calc(100% - 2em);
+                margin-bottom: 1em;
+            }
+
+            #video {
+                width: 250px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <div class="wave-texture"></div>
+    <div class="hearts"></div>
+    <div class="navbar">
+        <a href="#inicio">Início</a>
+        <a href="#linha-do-tempo">Linha do Tempo</a>
+        <a href="#carta">Carta</a>
+        <a href="#nos">Nós</a>
+    </div>
+    <div class="container content">
+        <section id="inicio">
+            <h1>Moletom Verde - '9 Meses'</h1>
+            <p>Bem-vindo ao site que celebra os nossos 9 meses de namoro!</p>
+        </section>
+        <section id="linha-do-tempo">
+            <h2>Linha do Tempo</h2>
+            <div class="timeline-container">
+                <ul class="timeline">
+                    <li
+                        onclick="showModal('imagens/wizard.jpeg', '25 de Abril de 2023: Vocês se conheceram no curso de inglês. Você (Bruna) estudava logo após a aula dele começar, então raramente  se viam, mas naquele dia específico, tudo cooperou pra vocês  se encontrarem e finalmente conversassem, ele (Gustavo) que voltava  pra casa de ônibus logo após o fim da aula dele, mas naquele dia o ônibus resolveu não passar, ou melhor, DOIS ônibus n paressaram, e ele resolvou voltar pra Wizard. Lá era o durante o seu intervalo, vocês se encontram, ele com a uma camisa do Corinthians e o Moletom Verde, do IF, assim como você...')">
+                        <div class="pin"></div>
+                        <img src="imagens/wizard.jpeg" alt="Curso de Inglês e Ping Pong">
+                    </li>
+                    <li
+                        onclick="showModal('imagens/instagram.jpeg', '26 de Abril de 2023: Um dia depois de vocês se conhecerem, você pediu pra seguir ele, e ele então aceitou, e desde então vocês começaram a conversar... Naquela manhã logo depois de ter  aceitado sua solicitação ele respondeu seu story, e vocês conversaram por muito mais tempo, e se deram muito bem desde o começo, surgindo ali oque viria a ser uma grande amizade.')">
+                        <div class="pin"></div>
+                        <img src="imagens/instagram.jpeg" alt="Instagram">
+                    </li>
+                    <li
+                        onclick="showModal('imagens/exatecca.jpeg', '29 de Maio a 2 de Junho de 2023: Exatecca, evento da escola onde vocês se aproximaram mais. Tudo foi incrível, cada coisa alí sempre ajudou vocês a estarem sempre juntos, desde o dia que você chamou ele pra ir pra escola mais cedo e ele simplesmente aceitou. ')">
+                        <div class="pin"></div>
+                        <img src="imagens/exatecca.jpeg" alt="Exatecca">
+                    </li>
+                    <li
+                        onclick="showModal('imagens/diadodonnut.jpeg', '2 de Junho de 2023: O famoso dia do Donut, o dia que você chamou ele pra ir mais cedo pra escola pra poder ficar junto com você, naquele dia os dois foram de uber juntos pra escola, e ficaram até acabar o seu trabalho, você até levou ele pra sala da comissão, na F9, foi um dia bem agitado, mas só mais tarde vieram importantes acontecimentos, depois de vocês se separarem, um tempo depois após um combinado, você saiu com Gustavo e seus amigos, pra comer Donut em frente ao bosque maia, naquele fatídico momento, ele aceitou participar de um negócio lá, ao qual não sei explicar, processo aonde, o Gustavo acabou se sujando de tinta, e com tremenda maldade no coração, ele quis te abraçar, e voçê sem nem pensar duas vezes correu, e momentos depois, caiu e se machucou, o que fez ele se sentir muito mal, e mesmo você provando estar bem, ele não parecia estar satisfeito, a culpa consumia Gustavo, até que a seguinte pergunta aflingiu o coração daquele pobre rapaz: Gu, você tá assim porque ela se machucou, ou você tá assim porque foi com A BRUNA?, e a partir daquele exato ponto, a querida Bruna Teixeira, não saiu mais dá cabeça dele!')">
+                        <div class="pin"></div>
+                        <img src="imagens/diadodonnut.jpeg" alt="Dia do Donut">
+                    </li>
+                    <li
+                        onclick="showModal('imagens/confissao.jpeg', '10 de Junho de 2023: Naquela manhã de sábado, um dia como qualquer outro não é mesmo? Pelo contrário! naquele dia ele confessou seus sentimentos por você depois de tanto pensar, era mais um dia comum, ele acordou, te mandou bom dia e perguntou como você estava, assim fazia todos os dias, e continuara a fazer no futuro, conforme vocês conversavam mais, a conversa foi tomando um certo rumo, até que finalmente ele admitiu: Eu gosto de você, ou qualquer outra coisa do tipo... você  sabe.')">
+                        <div class="pin"></div>
+                        <img src="imagens/confissao.jpeg" alt="Confissão de Sentimentos">
+                    </li>
+                    <li
+                        onclick="showModal('imagens/primeiroselinho.jpeg', '13 de Julho de 2023: Já fazia muito tempo que vocês não se viam, depois das férias, e vocês que ainda não namoravam, era realmente muito difícil de se verem, mas até que naquele dia, seu sobrinho Renato queria jogar bola na quadra em frente  à sua casa, e Gustavo aproveitando a situação, pediu pra poder ir jogar bola com seu irmão Kaio, claro, que foi também uma desculpa para  ir  te ver, chegando lá, Gustavo e seu irmão jogaram algumas partidas com seu sobrinho, e quando perderam, vocês finalmente puderam ficar um pouco juntos, mas até aí nada aconteceu, conversaram e conversaram, os dois muito felizes, mas até que antes de ir embora veio, enfim o PRIMEIRO BEIJO, selinho, né? Mas eu acho que conta, ele ficou bobo naquela hora, e não conseguia parar de pensar nisso, e aconteceu outro logo antes deles irem embora, e você e seu sobrinho voltarem pra casa.')">
+                        <div class="pin"></div>
+                        <img src="imagens/primeiroselinho.jpeg" alt="Primeiro Selinho">
+                    </li>
+                    <li
+                        onclick="showModal('imagens/barbie.jpeg', '25 de Julho de 2023: Foi tudo muito complicado, vocês queriam assistir Barbie juntos, mas todo mundo tava combiando de assistir barbie, mas resumindo, vocês foram juntos assistir Barbie, Você, Gustavo e seus amigos, foi tudo muito legal, naquele dia era pra ter saído de vez o tão esperado PRIMEIRO BEIJO, mas deu tudo errado, em nenhuma das tentativas dele, você aceitou, e infelizmente acabou não saindo, mas aquela noite foi maravilhosa!  ')">
+                        <div class="pin"></div>
+                        <img src="imagens/barbie.jpeg" alt="Cinema">
+                    </li>
+                    <li
+                        onclick="showModal('imagens/pedidodenamoro.jpeg', '25 de Outubro de 2023: Esse é simplesmente um dos dias, com um dos momentos, se não O MOMENTO mais feliz da vida do Gustavo, era a semana do conhecimento, eu acho, vocês não estavam tendo aula, e acabou que em um dia, um dos amigos do Gustavo chamou ele pra ir no bosque depois de uma palestra que eles iriam, Gustavo perguntou se podia te chamar, vocês foram juntos e chegando lá, Gustavo foi perguntar dos meninos, que disseram que iriam se atrasar, após você e ele caminharem um pouco, vocês pararam em uma parte com umas mesas, até que você colocou seu celular apoiado e começou a gravar, ali começou o momento mais mágico da vida dele, foi tudo incrível, e enfim, vocês começaram a namorar!')">
+                        <div class="pin"></div>
+                        <img src="imagens/pedidodenamoro.jpeg" alt="Pedido de Namoro">
+                    </li>
+
+                </ul>
+            </div>
+        </section>
+        <section id="carta">
+            <h2>CARTA</h2>
+            <p>9 meses da gente, meu amor!
+                Mais um mês com a pessoa mais incrível que eu conheço, e aqui tá um pouco da nossa história, vc me faz
+                tão
+                bem, e vc não tem noção do quanto, mas vc é fenomenal, a minha melhor amiga, companheira, e que tá
+                sempre comigo, sempre que eu preciso, mesmo em momentos difíceis, vc continua pra sempre do meu lado, e
+                eu vou estar pra sempre com você. Tudo que eu faço é pra te ver feliz, ver sua feliciade é a melhor
+                coisa que tem nesse mundo, sempre com o seu sorriso maravilhoso, vc é simplesmente apaixonante, com a
+                sua beleza imensurável, um corpo deslumbrante, um coração enorme, você é a minha pessoa favorita. Eu te
+                amo muito, minha gatinha, minha e só minha, pra sempre minha, hoje é a minha namorada, mas depois daqui
+                uns anos, vai ser a MINHA ESPOSA, MEU DEUS, namoral, já pensou nisso? Eu perdi as contas da quantidade
+                de vezes que eu me peguei pensando em você, me imaginando junto ao seu lado, construindo um futuro
+                juntos, porque é assim que eu quero
+                viver pro resto da vida, com você, então eu fiz isso aqui pra você! Eu quero que você nunca esqueça do
+                quanto eu te amo, eu te amo mais que tudo, eu daria tudo por você, porque você é meu mundo, minha
+                mulher, meu amor todinho, minha branquela, né, minha inimiga do sol KKKKKK, eu poderia passar horas,
+                simplesmente falando de vc, mas eu não queria alongar, então eu só tenho uma única coisa pra te dizer: Feliz
+                9 meses de namoro, EUTEAMO muitão!</p>
+        </section>
+        <section id="nos">
+            <h2>NÓS</h2>
+            <div class="pixel-art">
+                <img src="imagens/nos1.jpeg" alt="Desenho em pixel de Gustavo">
+                <img src="imagens/nos2.jpeg" alt="Desenho em pixel de Bruna">
+            </div>
+        </section>
+        <h2>VÍDEOS<h2>
+                <div>
+                    <video id="video" controls width="600px" poster="./coisas/thumbnail.jpeg">
+                        <source src="./coisas/videoparabruna.mp4">
+                        <source src="./coisas/videoparabruna.mov">
+                        <source src="./coisas/videoparabruna.mkv">
+                    </video>
+                </div>
+                <div id="zoomModal" class="zoom-modal">
+                    <div class="zoom-modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <img id="zoomImg" src="" alt="">
+                        <p id="zoomText"></p>
+                        <button class="close-btn" onclick="closeModal()">Fechar</button>
+                    </div>
+                </div>
+                <script>
+                    // Função para mostrar o modal de zoom
+                    function showModal(imgSrc, text) {
+                        var modal = document.getElementById("zoomModal");
+                        var modalImg = document.getElementById("zoomImg");
+                        var captionText = document.getElementById("zoomText");
+
+                        modal.style.display = "block";
+                        modalImg.src = imgSrc;
+                        captionText.innerHTML = text;
+                    }
+                    // Função para fechar o modal de zoom
+                    function closeModal() {
+                        var modal = document.getElementById("zoomModal");
+                        modal.style.display = "none";
+                    }
+
+                </script>
+</body>
+
+</html>
